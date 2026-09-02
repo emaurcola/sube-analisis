@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heurísticas de Nielsen - SUBE</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+        background: linear-gradient(135deg, #f0f4f8 0%, #e8f1f7 100%);
+        color: #333;
+        min-height: 100vh;
+    }
+
+    .header {
+        background: linear-gradient(135deg, #0066CC 0%, #004099 50%, #1DB14E 100%);
+        color: white;
+        padding: 4rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 400px;
+        height: 400px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+    }
+
+    .header::after {
+        content: '';
+        position: absolute;
+        bottom: -50%;
+        left: -10%;
+        width: 300px;
+        height: 300px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+    }
+
+    .header-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .header-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 1rem;
+        font-size: 32px;
+    }
+
+    .header h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.5px;
+    }
+
+    .header p {
+        font-size: 1.15rem;
+        opacity: 0.95;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .container {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 4rem 4rem;
+    }
+
+    .nav-tabs {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 3.5rem;
+    }
+
+    .nav-tab {
+        text-decoration: none;
+        color: white;
+        border: none;
+        padding: 0.9rem 1.75rem;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #90A4AE 0%, #78909C 100%);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: all 300ms;
+    }
+
+    .nav-tab:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+    }
+
+    .nav-tab.active {
+        background: linear-gradient(135deg, #1DB14E 0%, #16a345 100%);
+        box-shadow: 0 4px 14px rgba(29, 177, 78, 0.35);
+    }
+
+    .intro-card {
+        background: linear-gradient(135deg, #0066CC 0%, #004099 100%);
+        color: white;
+        padding: 2.25rem;
+        border-radius: 16px;
+        margin-bottom: 3rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .intro-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 300px;
+        height: 300px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+    }
+
+    .intro-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .intro-content h2 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+    }
+
+    .intro-content p {
+        opacity: 0.92;
+        line-height: 1.7;
+        max-width: 800px;
+        margin-bottom: 0.5rem;
+    }
+
+    .scale-card {
+        background: white;
+        border: 1px solid #E8E8E8;
+        border-radius: 16px;
+        padding: 1.75rem 2rem;
+        margin-bottom: 4.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .scale-title {
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #999;
+        margin-bottom: 1rem;
+    }
+
+    .scale-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .scale-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+        color: #555;
+        font-weight: 600;
+    }
+
+    .scale-dot {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 800;
+        color: white;
+        flex-shrink: 0;
+    }
+
+    .sev0 { background: linear-gradient(135deg, #1DB14E 0%, #16a345 100%); }
+    .sev1 { background: linear-gradient(135deg, #FFB300 0%, #FF9500 100%); }
+    .sev2 { background: linear-gradient(135deg, #FF8F00 0%, #E65100 100%); }
+    .sev3 { background: linear-gradient(135deg, #FF5722 0%, #D32F2F 100%); }
+    .sev4 { background: linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%); }
+
+    .heuristics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 2rem;
+    }
+
+    .heuristic-card {
+        background: white;
+        border: 1px solid #E8E8E8;
+        border-radius: 16px;
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        transition: all 300ms;
+    }
+
+    .heuristic-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #1DB14E 0%, #0066CC 100%);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 300ms;
+    }
+
+    .heuristic-card:hover {
+        box-shadow: 0 12px 32px rgba(29, 177, 78, 0.2);
+        transform: translateY(-8px);
+        border-color: #1DB14E;
+    }
+
+    .heuristic-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .heuristic-card-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .heuristic-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        font-size: 16px;
+        font-weight: 800;
+        color: white;
+        flex-shrink: 0;
+        background: linear-gradient(135deg, #1DB14E 0%, #0066CC 100%);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .heuristic-tag {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #0066CC;
+        margin-bottom: 4px;
+    }
+
+    .heuristic-title {
+        font-size: 18px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #0066CC 0%, #004099 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .heuristic-desc {
+        color: #555;
+        line-height: 1.7;
+        font-size: 14px;
+    }
+
+    .footer {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: #999;
+        font-size: 13px;
+    }
+
+    @media (max-width: 768px) {
+        .header h1 {
+            font-size: 2rem;
+        }
+
+        .container {
+            padding: 3rem 1.5rem;
+        }
+
+        .heuristics-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .heuristic-card {
+            padding: 1.5rem;
+        }
+
+        .scale-row {
+            gap: 1rem;
+        }
+    }
+</style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-logo">
+                <i class="ti ti-checklist"></i>
+                SUBE
+            </div>
+            <h1>Heurísticas de Nielsen</h1>
+            <p>Las 10 reglas de usabilidad de Jakob Nielsen aplicadas en la auditoría de la app SUBE</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="nav-tabs">
+            <a class="nav-tab" href="./index.html"><i class="ti ti-home"></i> Auditoría SUBE</a>
+            <a class="nav-tab" href="./leyesux.html"><i class="ti ti-layout-list"></i> Leyes UX (13)</a>
+            <a class="nav-tab active" href="./nielsen.html"><i class="ti ti-checklist"></i> Heurísticas Nielsen (10)</a>
+        </div>
+
+        <div class="intro-card">
+            <div class="intro-content">
+                <h2>¿Qué son las heurísticas de Nielsen?</h2>
+                <p>Son reglas de usabilidad que apuntan a optimizar la experiencia del usuario. Permiten evaluar el diseño de una interfaz sin necesidad de convocar usuarios reales.</p>
+                <p>Su resultado no debe tomarse como evidencia definitiva, pero es muy útil para detectar posibles puntos de dolor vinculados a usabilidad y accesibilidad.</p>
+            </div>
+        </div>
+
+        <div class="scale-card">
+            <div class="scale-title">Escala de severidad (0 a 4)</div>
+            <div class="scale-row">
+                <div class="scale-item"><span class="scale-dot sev0">0</span> No es un problema</div>
+                <div class="scale-item"><span class="scale-dot sev1">1</span> Cosmético</div>
+                <div class="scale-item"><span class="scale-dot sev2">2</span> Media prioridad</div>
+                <div class="scale-item"><span class="scale-dot sev3">3</span> Alta prioridad</div>
+                <div class="scale-item"><span class="scale-dot sev4">4</span> Catástrofe de usabilidad</div>
+            </div>
+        </div>
+
+        <div class="heuristics-grid">
+            <div class="heuristic-card">
+                <div class="heuristic-card-header">
+                    <div class="heuristic-number">1</div>
+                    <div>
+                        <div class="heuristic-tag">Heurística 1/10</div>
+                        <div class="heuristic-title">Visibilidad del estado del sistema</div>
+                    </div>
+                </div>
+                <p class="heuristic-desc">El sistema debe informar a los usuarios del estado del sistema, dando una retroalimentación apropiada en un tiempo razonable. Queremos que la persona usuaria sepa lo que está sucediendo.</p>
+            </div>
+
+            <div class="heuristic-card">
+                <div class="heuristic-card-header">
+                    <div class="heuristic-number">2</div>
+                    <div>
+                        <div class="heuristic-tag">Heurística 2/10</div>
+                        <div class="heuristic-title">Correspondencia entre el sistema y el mundo real</div>
+                    </div>
+                </div>
+                <p class="heuristic-desc">El sistema debe utilizar el lenguaje de los usuarios, con metáforas, palabras o frases que le sean conocidas, en lugar de los términos técnicos del sistema. Queremos que la persona usuaria sepa de lo que estamos hablando.</p>
+            </div>
+
+            <div class="heuristic-card">
+                <div class="heuristic-card-header">
+                    <div class="heuristic-number">3</div>
+                    <div>
+                        <div class="heuristic-tag">Heurística 3/10</div>
+                        <div class="heuristic-title">Control y libertad del usuario</div>
+                    </div>
+                </div>
+                <p class="heuristic-desc">Las personas usuarias deben tener siempre el control de la situación. Cuando eligen una función por error, necesitan una "salida de emergencia" claramente marcada, sin tener que pasar por un proceso extendido.</p>
+            </div>
+
+            <div class="heuristic-card">
+                <div class="heuristic-card-header">
+                    <div class="heuristic-number">4</div>
+                    <div>
+                        <div class="heuristic-tag">Heurística 4/10</div>
+                        <div class="heuristic-title">Consistencia y estándares</div>
+                    </div>
+                </div>
+                <p class="heuristic-desc">Los usuarios no deberían tener que preguntarse si diferentes palabras, situaciones o acciones significan lo mismo. Lo recomendable es seguir los patrones de la industria y la plataforma, y mantenerlos constantes en el sistema.</p>
+            </div>
+
+            <div class="heuristic-card">
+                <div class="heuristic-card-header">
+                    <div class="heuristic-number">5</div>
+                    <div>
+                        <div class="heuristic-tag">Heurística 5/10</div>
+                        <div class="heuristic-title">Prevención de errores</div>
+                    </div>
+                </div>
+                <p class="heuristic-desc">Es más importante prevenir la aparición de errores que generar buenos mensajes de error. Hay que eliminar acciones predispuestas al error o, en todo caso, preguntar al usuario si está seguro antes de realizarlas.</p>
+            </div>
+
+            <div class="heuristic-card">
+                <div class="heuristic-card-header">
+                    <div class="heuristic-number">6</div>
+                    <div>
+                        <div class="heuristic-tag">Heurística 6/10</div>
+                        <div class="heuristic-title">Reconocimiento antes que recuerdo</div>
+                    </div>
+                </div>
+                <p class="heuristic-desc">El sistema debe minimizar la información que el usuario debe recordar, mostrándola a través de objetos, acciones u opciones visibles. El usuario no tiene por qué recordar la información que recibió anteriormente.</p>
+            </div>
+
+            <div class="heuristic-card">
+                <div class="heuristic-card-header">
+                    <div class="heuristic-number">7</div>
+                    <div>
+                        <div class="heuristic-tag">Heurística 7/10</div>
+                        <div class="heuristic-title">Flexibilidad y eficiencia de uso</div>
+                    </div>
+                </div>
+                <p class="heuristic-desc">Los atajos permiten aumentar la velocidad de interacción para el usuario experto, de forma que el sistema pueda atraer tanto a usuarios principiantes como experimentados. El sistema debe permitir personalizar acciones frecuentes.</p>
+            </div>
+
+            <div class="heuristic-card">
+                <div class="heuristic-card-header">
+                    <div class="heuristic-number">8</div>
+                    <div>
+                        <div class="heuristic-tag">Heurística 8/10</div>
+                        <div class="heuristic-title">Diseño estético y minimalista</div>
+                    </div>
+                </div>
+                <p class="heuristic-desc">La interfaz no debe contener información que no sea relevante o que se utilice raramente. Cada unidad adicional de información en un diálogo compite con las unidades relevantes y disminuye su visibilidad.</p>
+            </div>
+
+            <div class="heuristic-card">
+                <div class="heuristic-card-header">
+                    <div class="heuristic-number">9</div>
+                    <div>
+                        <div class="heuristic-tag">Heurística 9/10</div>
+                        <div class="heuristic-title">Reconocer, diagnosticar y recuperarse de errores</div>
+                    </div>
+                </div>
+                <p class="heuristic-desc">Los mensajes de error deben expresarse en un lenguaje claro, indicar exactamente el problema y ser constructivos. El usuario tiene que saber qué salió mal y cómo puede solucionarlo.</p>
+            </div>
+
+            <div class="heuristic-card">
+                <div class="heuristic-card-header">
+                    <div class="heuristic-number">10</div>
+                    <div>
+                        <div class="heuristic-tag">Heurística 10/10</div>
+                        <div class="heuristic-title">Ayuda y documentación</div>
+                    </div>
+                </div>
+                <p class="heuristic-desc">La documentación tiene que ser fácil de encontrar, estar centrada en las tareas del usuario, detallar las etapas a realizar y no ser muy extensa. Queremos que las personas usuarias obtengan ayuda si la necesitan.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Auditoría UX/UI SUBE | Basado en "Gestalt, leyes UX y heurísticas de Nielsen"</p>
+    </div>
+</body>
+</html>

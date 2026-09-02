@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leyes UX - SUBE</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+        background: linear-gradient(135deg, #f0f4f8 0%, #e8f1f7 100%);
+        color: #333;
+        min-height: 100vh;
+    }
+
+    .header {
+        background: linear-gradient(135deg, #0066CC 0%, #004099 50%, #1DB14E 100%);
+        color: white;
+        padding: 4rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 400px;
+        height: 400px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+    }
+
+    .header::after {
+        content: '';
+        position: absolute;
+        bottom: -50%;
+        left: -10%;
+        width: 300px;
+        height: 300px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+    }
+
+    .header-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .header-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 1rem;
+        font-size: 32px;
+    }
+
+    .header h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.5px;
+    }
+
+    .header p {
+        font-size: 1.15rem;
+        opacity: 0.95;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .container {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 4rem 4rem;
+    }
+
+    .nav-tabs {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 3.5rem;
+    }
+
+    .nav-tab {
+        text-decoration: none;
+        color: white;
+        border: none;
+        padding: 0.9rem 1.75rem;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #90A4AE 0%, #78909C 100%);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: all 300ms;
+    }
+
+    .nav-tab:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+    }
+
+    .nav-tab.active {
+        background: linear-gradient(135deg, #0066CC 0%, #004099 100%);
+        box-shadow: 0 4px 14px rgba(0, 102, 204, 0.35);
+    }
+
+    .intro-card {
+        background: linear-gradient(135deg, #0066CC 0%, #004099 100%);
+        color: white;
+        padding: 2.25rem;
+        border-radius: 16px;
+        margin-bottom: 4.5rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .intro-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 300px;
+        height: 300px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+    }
+
+    .intro-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .intro-content h2 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+    }
+
+    .intro-content p {
+        opacity: 0.92;
+        line-height: 1.7;
+        max-width: 800px;
+        margin-bottom: 0.5rem;
+    }
+
+    .laws-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 2rem;
+    }
+
+    .law-card {
+        background: white;
+        border: 1px solid #E8E8E8;
+        border-radius: 16px;
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        transition: all 300ms;
+    }
+
+    .law-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #0066CC 0%, #1DB14E 100%);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 300ms;
+    }
+
+    .law-card:hover {
+        box-shadow: 0 12px 32px rgba(0, 102, 204, 0.2);
+        transform: translateY(-8px);
+        border-color: #0066CC;
+    }
+
+    .law-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .law-card-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .law-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        font-size: 16px;
+        font-weight: 800;
+        color: white;
+        flex-shrink: 0;
+        background: linear-gradient(135deg, #0066CC 0%, #1DB14E 100%);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .law-title-wrap {
+        flex: 1;
+    }
+
+    .law-tag {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #1DB14E;
+        margin-bottom: 4px;
+    }
+
+    .law-title {
+        font-size: 18px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #0066CC 0%, #004099 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .law-desc {
+        color: #555;
+        line-height: 1.7;
+        font-size: 14px;
+        margin-bottom: 1.25rem;
+    }
+
+    .law-quote {
+        background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%);
+        padding: 1.25rem;
+        border-radius: 12px;
+        border-left: 4px solid #1DB14E;
+        font-size: 13px;
+        color: #555;
+        font-style: italic;
+        line-height: 1.6;
+    }
+
+    .law-quote strong {
+        display: block;
+        margin-top: 0.5rem;
+        color: #1DB14E;
+        font-style: normal;
+        font-weight: 700;
+    }
+
+    .footer {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: #999;
+        font-size: 13px;
+    }
+
+    @media (max-width: 768px) {
+        .header h1 {
+            font-size: 2rem;
+        }
+
+        .container {
+            padding: 3rem 1.5rem;
+        }
+
+        .laws-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .law-card {
+            padding: 1.5rem;
+        }
+    }
+</style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-logo">
+                <i class="ti ti-scale"></i>
+                SUBE
+            </div>
+            <h1>Leyes UX</h1>
+            <p>Principios de usabilidad y percepción aplicados en la auditoría de la app SUBE</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="nav-tabs">
+            <a class="nav-tab" href="./index.html"><i class="ti ti-home"></i> Auditoría SUBE</a>
+            <a class="nav-tab active" href="./leyesux.html"><i class="ti ti-layout-list"></i> Leyes UX (13)</a>
+            <a class="nav-tab" href="./nielsen.html"><i class="ti ti-checklist"></i> Heurísticas Nielsen (10)</a>
+        </div>
+
+        <div class="intro-card">
+            <div class="intro-content">
+                <h2>¿Qué son las leyes UX?</h2>
+                <p>El diseño de interfaces no opera en el vacío: hay principios, leyes y heurísticas derivados de la psicología cognitiva, la ergonomía y décadas de práctica evaluativa. No son reglas absolutas, sino herramientas para pensar mejor.</p>
+                <p>Es el conjunto de mejores prácticas que los diseñadores pueden aplicar para mejorar la experiencia del usuario. A continuación, las 13 leyes y principios de percepción de la presentación: las 4 leyes UX, los 6 principios de la Gestalt y 3 principios adicionales aplicados en la auditoría de SUBE.</p>
+            </div>
+        </div>
+
+        <div class="laws-grid">
+            <div class="law-card">
+                <div class="law-card-header">
+                    <div class="law-number">1</div>
+                    <div class="law-title-wrap">
+                        <div class="law-tag">Ley de Hick</div>
+                        <div class="law-title">Demasiadas opciones = paralización</div>
+                    </div>
+                </div>
+                <p class="law-desc">El tiempo que se tarda en tomar una decisión aumenta a medida que se incrementa el número de alternativas disponibles. Cuantas más opciones, más difícil resulta elegir.</p>
+                <div class="law-quote">
+                    "El tiempo que se tarda en tomar una decisión aumenta a medida que se incrementa el número de alternativas."
+                    <strong>William E. Hick, psicólogo</strong>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-card-header">
+                    <div class="law-number">2</div>
+                    <div class="law-title-wrap">
+                        <div class="law-tag">Ley de Fitts</div>
+                        <div class="law-title">Tamaño y distancia de elementos interactivos</div>
+                    </div>
+                </div>
+                <p class="law-desc">Un elemento será más fácil de seleccionar cuanto más grande sea y menos desplazamiento requiera para alcanzarlo. El tamaño y la cercanía del objetivo determinan la velocidad de interacción.</p>
+                <div class="law-quote">
+                    "El tiempo necesario para alcanzar un objetivo con un movimiento rápido es en función del tamaño de dicho objetivo y de la distancia que hay que recorrer hasta él."
+                    <strong>Paul Fitts, 1954, psicólogo</strong>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-card-header">
+                    <div class="law-number">3</div>
+                    <div class="law-title-wrap">
+                        <div class="law-tag">Ley de Jakob</div>
+                        <div class="law-title">Predecibilidad según patrones conocidos</div>
+                    </div>
+                </div>
+                <p class="law-desc">Los usuarios esperan que las interfaces se comporten de manera predecible, similar a otras aplicaciones y sitios web que ya han utilizado. Alejarse de esos patrones genera fricción y desconfianza.</p>
+                <div class="law-quote">
+                    "Los usuarios pasan la mayor parte de su tiempo en otros sitios, por lo que prefieren que el tuyo funcione de la misma manera que los que ya conocen."
+                    <strong>Jakob Nielsen</strong>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-card-header">
+                    <div class="law-number">4</div>
+                    <div class="law-title-wrap">
+                        <div class="law-tag">Ley de Tesler</div>
+                        <div class="law-title">Simplicidad vs. complejidad inherente</div>
+                    </div>
+                </div>
+                <p class="law-desc">Toda tarea tiene una complejidad mínima e irreductible. Una vez alcanzado ese límite, ya no se puede simplificar más: solo se puede decidir quién absorbe esa complejidad, el sistema o el usuario.</p>
+                <div class="law-quote">
+                    "Para cualquier proceso existe un nivel básico de complejidad inherente al propio proceso. Una vez alcanzado ese nivel mínimo no se puede simplificar más, sólo se puede mover la complejidad de un lado a otro."
+                    <strong>Larry Tesler, científico computacional</strong>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-card-header">
+                    <div class="law-number">5</div>
+                    <div class="law-title-wrap">
+                        <div class="law-tag">Gestalt · Proximidad</div>
+                        <div class="law-title">Agrupar elementos relacionados</div>
+                    </div>
+                </div>
+                <p class="law-desc">Los objetos que se encuentran cercanos entre sí son percibidos como un grupo. La distancia visual entre elementos comunica al usuario qué información pertenece junta.</p>
+                <div class="law-quote">
+                    "Los objetos que se encuentran cercanos entre ellos son percibidos como grupo."
+                    <strong>Principios de la Gestalt</strong>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-card-header">
+                    <div class="law-number">6</div>
+                    <div class="law-title-wrap">
+                        <div class="law-tag">Gestalt · Similitud</div>
+                        <div class="law-title">Elementos iguales se perciben como grupo</div>
+                    </div>
+                </div>
+                <p class="law-desc">Los objetos con atributos similares, como color, tamaño o forma, son percibidos como parte de un mismo grupo o categoría, incluso sin estar próximos entre sí.</p>
+                <div class="law-quote">
+                    "Los objetos con atributos similares, como color, tamaño o forma, son percibidos como grupo."
+                    <strong>Principios de la Gestalt</strong>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-card-header">
+                    <div class="law-number">7</div>
+                    <div class="law-title-wrap">
+                        <div class="law-tag">Principio UX</div>
+                        <div class="law-title">Feedback visual: confirmación clara de acciones</div>
+                    </div>
+                </div>
+                <p class="law-desc">El sistema debe comunicar de forma inmediata y clara el resultado de cada acción del usuario (éxito, error, carga) mediante señales visuales como color, iconos o animaciones, reduciendo la incertidumbre sobre lo que ocurrió.</p>
+            </div>
+
+            <div class="law-card">
+                <div class="law-card-header">
+                    <div class="law-number">8</div>
+                    <div class="law-title-wrap">
+                        <div class="law-tag">Principio UX</div>
+                        <div class="law-title">Jerarquía visual: elementos importantes destacados</div>
+                    </div>
+                </div>
+                <p class="law-desc">Organiza los elementos de una interfaz según su importancia relativa, usando tamaño, color, contraste y posición para guiar la atención del usuario hacia lo más relevante primero.</p>
+            </div>
+
+            <div class="law-card">
+                <div class="law-card-header">
+                    <div class="law-number">9</div>
+                    <div class="law-title-wrap">
+                        <div class="law-tag">Principio UX</div>
+                        <div class="law-title">Carga cognitiva: información necesaria vs. innecesaria</div>
+                    </div>
+                </div>
+                <p class="law-desc">Es la cantidad de recursos mentales que un usuario debe emplear para comprender y operar una interfaz. Cuanta menor carga cognitiva innecesaria, más simple y usable resulta la experiencia.</p>
+            </div>
+
+            <div class="law-card">
+                <div class="law-card-header">
+                    <div class="law-number">10</div>
+                    <div class="law-title-wrap">
+                        <div class="law-tag">Gestalt · Cercados</div>
+                        <div class="law-title">Objetos con límite se perciben como grupo</div>
+                    </div>
+                </div>
+                <p class="law-desc">Los objetos que están cercados o que tienen un límite a su alrededor (un borde, un fondo de color, un contenedor) son percibidos como un grupo, aunque no estén particularmente cerca entre sí.</p>
+                <div class="law-quote">
+                    "Los objetos que están cercados o que tienen un límite a su alrededor son percibidos como grupo."
+                    <strong>Principios de la Gestalt</strong>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-card-header">
+                    <div class="law-number">11</div>
+                    <div class="law-title-wrap">
+                        <div class="law-tag">Gestalt · Cerramiento</div>
+                        <div class="law-title">La mente completa las formas incompletas</div>
+                    </div>
+                </div>
+                <p class="law-desc">Las figuras abiertas son percibidas como cerradas, completas y regulares, siempre que exista una forma razonable de interpretarlas así. El ojo "rellena" los espacios faltantes de una figura.</p>
+                <div class="law-quote">
+                    "Las figuras abiertas son percibidas como cerradas, completas y regulares siempre y cuando hay una forma de que razonablemente puedan ser interpretadas así."
+                    <strong>Principios de la Gestalt</strong>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-card-header">
+                    <div class="law-number">12</div>
+                    <div class="law-title-wrap">
+                        <div class="law-tag">Gestalt · Continuidad</div>
+                        <div class="law-title">Los elementos alineados se leen como un flujo continuo</div>
+                    </div>
+                </div>
+                <p class="law-desc">Las figuras u objetos que están alineados juntos son percibidos como continuos, incluso si están compuestos por partes separadas. Guía la mirada del usuario a lo largo de un recorrido visual.</p>
+                <div class="law-quote">
+                    "Las figuras u objetos que están alineados juntos para aparecer como continuos."
+                    <strong>Principios de la Gestalt</strong>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-card-header">
+                    <div class="law-number">13</div>
+                    <div class="law-title-wrap">
+                        <div class="law-tag">Gestalt · Conexión</div>
+                        <div class="law-title">Los objetos unidos se perciben como una unidad</div>
+                    </div>
+                </div>
+                <p class="law-desc">Los objetos que están conectados entre sí, por ejemplo mediante una línea, son percibidos como un grupo, incluso con mayor fuerza que la proximidad o la similitud de color y forma.</p>
+                <div class="law-quote">
+                    "Los objetos que están conectados entre ellos son percibidos como un grupo."
+                    <strong>Principios de la Gestalt</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Auditoría UX/UI SUBE | Basado en "Gestalt, leyes UX y heurísticas de Nielsen"</p>
+    </div>
+</body>
+</html>
